@@ -7,23 +7,20 @@
     <link rel="stylesheet" type="text/css" href="css/components.css"/>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
 
-    <!--Importanto Bootstrap-->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
-
     <title>Task Manager SI 1</title>
-
 </head>
 
 <body>
 
-<div class=" center-block container col-sm-3 text-center" ng-app="myApp" ng-controller="controller">
+<div class="center-block container text-center" ng-app="myApp" ng-controller="controller">
     <h1> My Tasks </h1>
 
     <h4> Total of tasks: {{taskList.length}}</h4>
     <form>
         <div class="form-group">
             <label for="taskName"> Task</label>
-            <input type="text" class="form-control" ng-model="name" id="taskName">
+            <input type="text" class="form-control" placeholder="Enter the task" ng-model="name"
+                   id="taskName">
             <br>
             <button type="submit" ng-click="addTask()"> Add new task</button>
             <br>
@@ -42,13 +39,7 @@
         <input type="button" onclick="changeColor('')" value="Resetar cor"/>
     </div>
 </div>
-
-
-
 </body>
-
-<!--Importando o arquivo com as funções-->
-<script src="js/functions.js"></script>
 
 <!--Referências do Angular-->
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
