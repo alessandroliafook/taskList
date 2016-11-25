@@ -13,8 +13,6 @@ app.controller('controller', function ($scope) {
 
     var task = function (taskName) {
       this.nome = taskName;
-      this.isDone = false;
-
     };
 
     $scope.addTask = function () {
@@ -22,4 +20,12 @@ app.controller('controller', function ($scope) {
         console.log($scope.name + " adicionada!");
     };
 
+    $scope.removeTask = function (index) {
+        $scope.taskList.splice(index, 1);
+    }
+
 });
+
+function changeColor(color) {
+    document.body.style.backgroundColor = color;
+};
