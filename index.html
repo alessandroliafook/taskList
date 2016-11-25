@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="br">
+<head>
+    <meta charset="UTF-8">
+
+    <!--Importando CSS-->
+    <link rel="stylesheet" type="text/css" href="css/components.css"/>
+
+    <!--Importanto Bootstrap-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+
+    <title>Task Manager SI 1</title>
+
+</head>
+
+<body>
+
+<!--Importando o arquivo com as funções-->
+<script src="js/functions.js"></script>
+
+<h1> Aprendendo HTML</h1>
+
+<div>
+    <input type="button" onclick="changeColor('navy')" value="Mudar a cor para navy"/>
+    <input type="button" onclick="changeColor('')" value="Resetar cor"/>
+</div>
+
+<!--Referências do Angular-->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script src="js/app.js"></script>
+
+<!--<h1>Manipulando Nomes</h1>-->
+<!--<div ng-app="myApp" ng-controller="controller">-->
+
+<!--Primeiro Nome: <input type="text" ng-model="firstName"><br>-->
+<!--<br>-->
+<!--Último Nome: <input type="text" ng-model="lastName"><br>-->
+<!--<br>-->
+<!--Nome Completo: {{firstName + ' ' + lastName}}-->
+
+<!--</div>-->
+
+<!--Referência do Bootstrap-->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></script>
+<h1>Fazendo formulários</h1>
+<div class="container">
+    <h2>Formulário de email e senha</h2>
+    <form>
+        <div class="form-group">
+            <label for="email"> Email:</label>
+            <input type="email" class="form-control" placeholder="Enter email">
+        </div>
+
+        <div class="form-group">
+            <label for="pwd"> Email:</label>
+            <input type="password" class="form-control" placeholder="Enter password">
+        </div>
+
+        <div class="form-group">
+            <label for="checkbox"> Lembrar me</label>
+        </div>
+        <button type="submit" class="btn btn-default"> Enviar</button>
+
+        <h2> Manipulando o Background</h2>
+        <div>
+            <button type="button" onclick="changeColor('navy')" class="btn btn-default"> Mudar a cor</button>
+            <button type="button" onclick="changeColor('')" class="btn btn-default"> Resetar a cor</button>
+        </div>
+    </form>
+</div>
+
+<h1> Juntando as coisas</h1>
+<div class="container" ng-app="myApp" ng-controller="controller">
+    <h2>Trabalhando com nomes</h2>
+    <form>
+        <div class="form-group">
+            <label for="text"> Primeiro Nome:</label>
+            <input type="text" ng-model="firstName" class="form-control" placeholder="Insira o primeiro nome">
+        </div>
+
+        <div class="form-group">
+            <label for="text"> Primeiro Nome:</label>
+            <input type="text" ng-model="lastName" class="form-control" placeholder="Insira o ultimo nome">
+        </div>
+
+        <h3>Nome Completo: {{firstName + ' ' + lastName}}</h3>
+
+    </form>
+
+
+</div>
+
+
+</body>
+
+</html>
