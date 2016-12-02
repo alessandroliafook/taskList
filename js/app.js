@@ -8,42 +8,78 @@ app.controller('controller', function ($scope) {
 
     $scope.taskList = new Array();
     $scope.taskName = "";
-    $scope.percentualDone = 0.0;
 
     var task = function (taskName) {
         this.titleName = taskName;
         this.isDone = false;
     };
+    //creating start tasks and add to list to accomplish design request
+    var wakeUp = new task("Wake Up");
+    $scope.taskList.push(wakeUp);
+    var sleep = new task("Sleep");
+    $scope.taskList.push(sleep);
 
     $scope.addTask = function () {
+
         if (!containsTask($scope.taskName)) {
+
             $scope.taskList.push(new task($scope.taskName));
-            console.log($scope.taskName + " adicionada!");
+            $scope.atualizarDonePercentage();
         }
     };
 
     function containsTask(taskName) {
+
         for (var index = 0; index < $scope.taskList.length; index++) {
-            if ($scope.taskList[index].titleName === taskName) {
-                return true;
-            }
+
+            var taskTitle = $scope.taskList[index].titleName;
+            if (taskTitle === taskName) {return true;}
         }
         return false;
-    }
+    };
 
     $scope.deleteTask = function (index) {
-        $scope.taskList.splice(index, 1);
-    }
 
-    $scope.getDonePercentage = function () {
-        var totalDone = 0;
+        var task = $scope.taskList[index];
+        task.isDone = false;
+
+        $scope.atualizeConcludedList(index);
+        $scope.taskList.splice(index, 1);
+        $scope.atualizarDonePercentage();
+    };
+
+    $scope.removeDoneTasks = function () {
+
         for (var index = 0; index < $scope.taskList.length; index++) {
-            if ($scope.taskList[index].isDone) {
-                totalDone += 1;
-            }
+            var task = $scope.taskList[index];
+            if (task.isDone === true) {$scope.deleteTask(index)}
         }
-        return Math.floor(totalDone / taskList.length) * 100;
-    }
+    };
+
+    $scope.concludedList = new Array();
+    $scope.donePercentage = 0;
+
+    $scope.atualizeConcludedList = function (index) {
+
+        var task = $scope.taskList[index];
+
+        var taskIndex = $scope.concludedList.indexOf(task);
+        if(task.isDone === true &&  taskIndex < 0) {
+            $scope.concludedList.push(task);
+        }
+
+        if(task.isDone === false && taskIndex >= 0) {
+            $scope.concludedList.splice(taskIndex, 1);
+        }
+        $scope.atualizarDonePercentage();
+    };
+
+    $scope.atualizarDonePercentage = function () {
+        $scope.donePercentage = Math.floor(($scope.concludedList.length / $scope.taskList.length) * 100);
+        document.getElementById('progress-bar').style.width = $scope.donePercentage+"%";
+    };
+
+
 });
 
 function changeCSS(cssFile, cssLinkIndex) {
@@ -56,9 +92,4 @@ function changeCSS(cssFile, cssLinkIndex) {
     newlink.setAttribute("href", cssFile);
 
     document.getElementsByTagName("head").item(0).replaceChild(newlink, oldlink);
-}
-
-
-function changeColor(color) {
-    document.body.style.backgroundColor = color;
 };
