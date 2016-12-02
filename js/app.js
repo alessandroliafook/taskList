@@ -49,8 +49,8 @@ app.controller('controller', function ($scope) {
     };
 
     $scope.removeDoneTasks = function () {
-
-        for (var index = 0; index < $scope.taskList.length; index++) {
+        var index = $scope.taskList.length;
+        while(--index >= 0){
             var task = $scope.taskList[index];
             if (task.isDone === true) {$scope.deleteTask(index)}
         }
@@ -62,8 +62,8 @@ app.controller('controller', function ($scope) {
     $scope.atualizeConcludedList = function (index) {
 
         var task = $scope.taskList[index];
-
         var taskIndex = $scope.concludedList.indexOf(task);
+
         if(task.isDone === true &&  taskIndex < 0) {
             $scope.concludedList.push(task);
         }
@@ -75,18 +75,20 @@ app.controller('controller', function ($scope) {
     };
 
     $scope.atualizarDonePercentage = function () {
+
         $scope.donePercentage = Math.floor(($scope.concludedList.length / $scope.taskList.length) * 100);
-        document.getElementById('progress-bar').style.width = $scope.donePercentage+"%";
+        var undone = 100 - $scope.donePercentage;
+
+        document.getElementById('done-bar').style.width = $scope.donePercentage+"%";
+        document.getElementById('undone-bar').style.width = undone+"%";
     };
-
-
 });
 
 function changeCSS(cssFile, cssLinkIndex) {
 
     var oldlink = document.getElementsByTagName("link").item(cssLinkIndex);
-
     var newlink = document.createElement("link");
+
     newlink.setAttribute("rel", "stylesheet");
     newlink.setAttribute("type", "text/css");
     newlink.setAttribute("href", cssFile);

@@ -9,3 +9,11 @@
 #progress-bar {
     width: 0%;
 }
+
+#done-bar {
+    width: 0%;
+}
+
+#undone-bar {
+    width: 100%;
+}
