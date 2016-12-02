@@ -6,33 +6,41 @@ var app = angular.module('myApp', []);
 
 app.controller('controller', function ($scope) {
 
-    $scope.taskList = new Array();
     $scope.taskName = "";
+    $scope.tasks = new Array();
 
+    //base object of the system
     var task = function (taskName) {
         this.titleName = taskName;
         this.isDone = false;
+        this.columnName = "warning";
     };
-    //creating start tasks and add to list to accomplish design request
-    var wakeUp = new task("Wake Up");
-    $scope.taskList.push(wakeUp);
-    var sleep = new task("Sleep");
-    $scope.taskList.push(sleep);
 
+    //creating start tasks and add to list to accomplish design request
+
+    //first task
+    var wakeUp = new task("Wake Up");
+    $scope.tasks.push(wakeUp);
+
+    //second task
+    var sleep = new task("Sleep");
+    $scope.tasks.push(sleep);
+
+    // functions that manipulate the tasks
     $scope.addTask = function () {
 
-        if (!containsTask($scope.taskName)) {
+        if (!containTaskOnTaskList($scope.taskName)) {
 
-            $scope.taskList.push(new task($scope.taskName));
-            $scope.atualizarDonePercentage();
+            $scope.tasks.push(new task($scope.taskName));
+            $scope.updateDonePercentage();
         }
     };
 
-    function containsTask(taskName) {
+    function containTaskOnTaskList(taskName) {
 
-        for (var index = 0; index < $scope.taskList.length; index++) {
+        for (var index = 0; index < $scope.tasks.length; index++) {
 
-            var taskTitle = $scope.taskList[index].titleName;
+            var taskTitle = $scope.tasks[index].titleName;
             if (taskTitle === taskName) {return true;}
         }
         return false;
@@ -40,58 +48,49 @@ app.controller('controller', function ($scope) {
 
     $scope.deleteTask = function (index) {
 
-        var task = $scope.taskList[index];
+        var task = $scope.tasks[index];
         task.isDone = false;
 
-        $scope.atualizeConcludedList(index);
-        $scope.taskList.splice(index, 1);
-        $scope.atualizarDonePercentage();
+        $scope.updateConcludedList(index);
+        $scope.tasks.splice(index, 1);
+        $scope.updateDonePercentage();
     };
 
     $scope.removeDoneTasks = function () {
-        var index = $scope.taskList.length;
+        var index = $scope.tasks.length;
         while(--index >= 0){
-            var task = $scope.taskList[index];
+            var task = $scope.tasks[index];
             if (task.isDone === true) {$scope.deleteTask(index)}
         }
     };
 
+    //Auxiliary array that stores done tasks
     $scope.concludedList = new Array();
     $scope.donePercentage = 0;
 
-    $scope.atualizeConcludedList = function (index) {
+    $scope.updateConcludedList = function (index) {
 
-        var task = $scope.taskList[index];
+        var task = $scope.tasks[index];
         var taskIndex = $scope.concludedList.indexOf(task);
 
         if(task.isDone === true &&  taskIndex < 0) {
             $scope.concludedList.push(task);
+            $scope.tasks[index].columnName = "success";
         }
 
         if(task.isDone === false && taskIndex >= 0) {
             $scope.concludedList.splice(taskIndex, 1);
+            $scope.tasks[index].columnName = "warning";
         }
-        $scope.atualizarDonePercentage();
+        $scope.updateDonePercentage();
     };
 
-    $scope.atualizarDonePercentage = function () {
+    $scope.updateDonePercentage = function () {
 
-        $scope.donePercentage = Math.floor(($scope.concludedList.length / $scope.taskList.length) * 100);
+        $scope.donePercentage = Math.floor(($scope.concludedList.length / $scope.tasks.length) * 100);
         var undone = 100 - $scope.donePercentage;
 
         document.getElementById('done-bar').style.width = $scope.donePercentage+"%";
         document.getElementById('undone-bar').style.width = undone+"%";
     };
 });
-
-function changeCSS(cssFile, cssLinkIndex) {
-
-    var oldlink = document.getElementsByTagName("link").item(cssLinkIndex);
-    var newlink = document.createElement("link");
-
-    newlink.setAttribute("rel", "stylesheet");
-    newlink.setAttribute("type", "text/css");
-    newlink.setAttribute("href", cssFile);
-
-    document.getElementsByTagName("head").item(0).replaceChild(newlink, oldlink);
-};
