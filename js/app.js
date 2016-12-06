@@ -23,7 +23,12 @@ app.controller('controller', function ($scope) {
     $scope.tasks.push(wakeUp);
 
     //second task
+    var breakfast = new task("Breakfast");
+    $scope.tasks.push(breakfast);
+
+    //second task
     var sleep = new task("Sleep");
+
     $scope.tasks.push(sleep);
 
     // functions that manipulate the tasks
